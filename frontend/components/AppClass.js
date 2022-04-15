@@ -143,7 +143,7 @@ export default class AppClass extends React.Component {
             Coordinates ({x},{y})
           </h3>
           <h3 id="steps">
-            You moved {steps} {steps === 1 ? "time" : "times"}{" "}
+            You moved {steps} {steps === 1 ? "time" : "times"}
           </h3>
         </div>
         <div id="grid">

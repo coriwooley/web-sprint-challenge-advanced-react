@@ -113,6 +113,29 @@ export default function AppFunctional(props) {
     });
   };
 
+  const changeInput = (evt) => {
+    setState({...state, email: evt.target.value})
+  }
+
+  const onSubmit = (evt) => {
+    evt.preventDefault()
+    axios
+        .post(URL, {...state})
+        .then((res) => {
+            setState({
+                ...state,
+                message: res.data.message,
+                email: '',
+            })
+        })
+        .catch((err) => {
+            setState({
+                message: err.response.data.message,
+            })
+        })
+        setState({...state, email: ''})
+      }
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
@@ -129,17 +152,17 @@ export default function AppFunctional(props) {
         }
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{state.message}</h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button onClick={moveLeft} id="left">LEFT</button>
+        <button onClick={moveUp} id="up">UP</button>
+        <button onClick={moveRight} id="right">RIGHT</button>
+        <button onClick={moveDown} id="down">DOWN</button>
+        <button onClick={resetGrid} id="reset">reset</button>
       </div>
-      <form>
-        <input id="email" type="email" placeholder="type email"></input>
+      <form onSubmit={onSubmit}>
+        <input onChange={changeInput} value={state.email} id="email" type="email" placeholder="type email"></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
