@@ -1,4 +1,7 @@
 import React from 'react'
+import axios from 'axios'
+
+const URL = 'http://localhost:9000/api/result'
 
 export default class AppClass extends React.Component {
   state = {
@@ -112,6 +115,25 @@ export default class AppClass extends React.Component {
     })
   }
 
+  changeInput = (evt) => {
+    this.setState({
+      ...this.state,
+      email: evt.target.value
+    })
+  }
+
+  onSubmit = (evt) => {
+    evt.preventDefault()
+    axios.post(URL, {...this.state, email: this.state.email})
+    .then((res) => {
+      this.setState({...this.state, message: res.data.message})
+    })
+    .catch((err) => {
+      this.setState({...this.state, message: err.response.data.message})
+    })
+    this.setState({...this.state, email:''})
+  }
+
 
 
   render() {
@@ -133,7 +155,7 @@ export default class AppClass extends React.Component {
           }
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message">{message}</h3>
         </div>
         <div id="keypad">
           <button onClick={this.moveLeft} id="left">LEFT</button>
@@ -142,8 +164,8 @@ export default class AppClass extends React.Component {
           <button onClick={this.moveDown} id="down">DOWN</button>
           <button onClick={this.resetGrid} id="reset">reset</button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
+        <form onSubmit={this.onSubmit}>
+          <input onChange={this.changeInput} value={email} id="email" type="email" placeholder="type email"></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
