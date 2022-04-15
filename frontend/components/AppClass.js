@@ -115,23 +115,22 @@ export default class AppClass extends React.Component {
 
 
   render() {
+    const {x, y, steps, message, matrix, email} = this.state
     const { className } = this.props
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates (2, 2)</h3>
-          <h3 id="steps">You moved 0 times</h3>
+          <h3 id="coordinates">Coordinates ({x},{y})</h3>
+          <h3 id="steps">You moved {steps} {steps === 1 ? 'time' : 'times'} </h3>
         </div>
         <div id="grid">
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square active">B</div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
+          {
+            matrix.flatMap(square => square).map((squ, idx) => {
+              return <div key={idx} className={`square ${squ === 1 ? 'active' : ''} `}>
+                {squ === 1 ? 'B' : ''}
+              </div>
+            })
+          }
         </div>
         <div className="info">
           <h3 id="message"></h3>
