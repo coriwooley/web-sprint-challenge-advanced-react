@@ -1,6 +1,119 @@
 import React from 'react'
 
 export default class AppClass extends React.Component {
+  state = {
+    x: 2,
+    y: 2,
+    steps: 0,
+    email: '',
+    message: '',
+    matrix: [
+      [0,0,0],
+      [0,1,0],
+      [0,0,0]
+    ]
+  }
+
+  moveUp = () => {
+    if (this.state.y === 1) {
+      this.setState({
+        ...this.state,
+        message: "You can't go up"
+      })
+    } else {
+    const newMatrix = [...this.state.matrix]
+    newMatrix[this.state.y - 1][this.state.x - 1] = 0
+    newMatrix[this.state.y - 2][this.state.x - 1] = 1
+    this.setState({
+      ...this.state,
+      matrix: [...newMatrix],
+      y: this.state.y - 1,
+      steps: this.state.steps + 1,
+      message: ''
+    })
+  }
+  }
+
+  moveDown = () => {
+    if (this.state.y === 3) {
+      this.setState({
+        ...this.state,
+        message: "You can't go down"
+      })
+    } else {
+    const newMatrix = [...this.state.matrix]
+    newMatrix[this.state.y - 1][this.state.x - 1] = 0
+    newMatrix[this.state.y][this.state.x - 1] = 1
+    this.setState({
+      ...this.state,
+      matrix: [...newMatrix],
+      y: this.state.y + 1,
+      steps: this.state.steps + 1,
+      message: ''
+    })
+  }
+  }
+
+  moveLeft = () => {
+    if (this.state.x === 1) {
+      this.setState({
+        ...this.state,
+        message: "You can't go left"
+      })
+    } else {
+    const newMatrix = [...this.state.matrix]
+    newMatrix[this.state.y - 1][this.state.x - 1] = 0
+    newMatrix[this.state.y - 1][this.state.x - 2] = 1
+    this.setState({
+      ...this.state,
+      matrix: [...newMatrix],
+      x: this.state.x - 1,
+      steps: this.state.steps + 1,
+      message: ''
+    })
+  }
+  }
+
+
+  moveRight = () => {
+    if (this.state.x === 3) {
+      this.setState({
+        ...this.state,
+        message: "You can't go right"
+      })
+    } else {
+    const newMatrix = [...this.state.matrix]
+    newMatrix[this.state.y - 1][this.state.x - 1] = 0
+    newMatrix[this.state.y - 1][this.state.x] = 1
+    this.setState({
+      ...this.state,
+      matrix: [...newMatrix],
+      x: this.state.x + 1,
+      steps: this.state.steps + 1,
+      message: ''
+    })
+  }
+  }
+
+  resetGrid = () => {
+    this.setState({
+      ...this.state,
+      x: 2,
+      y: 2,
+      steps: 0,
+      email: '',
+      message: '',
+      matrix: [
+        [0,0,0],
+        [0,1,0],
+        [0,0,0]
+      ],
+ 
+    })
+  }
+
+
+
   render() {
     const { className } = this.props
     return (
